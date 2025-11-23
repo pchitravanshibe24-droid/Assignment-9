@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Graph {
+public:
+    int n;
+    vector<vector<int>> adj;
+
+    Graph(int n) : n(n), adj(n) {}
+
+    void addEdge(int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    void DFSUtil(int u, vector<bool> &vis) {
+        vis[u] = true;
+        cout << u << " ";
+
+        for (int v : adj[u])
+            if (!vis[v])
+                DFSUtil(v, vis);
+    }
+
+    void DFS(int start) {
+        vector<bool> vis(n, false);
+        cout << "DFS Traversal: ";
+        DFSUtil(start, vis);
+        cout << endl;
+    }
+};
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    Graph g(n);
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        g.addEdge(u, v);
+    }
+
+    int start;
+    cin >> start;
+
+    g.DFS(start);
+
+    return 0;
+}
